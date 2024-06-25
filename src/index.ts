@@ -5,6 +5,7 @@ import { ProtoGrpcType } from "./protos/employee";
 import { employeeController } from "./handers/employee.handler";
 import dotenv from "dotenv";
 import connectDB from "./db";
+import config from "./config";
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ const proto = grpc.loadPackageDefinition(
 
 const server = new grpc.Server();
 server.addService(proto.employee.EmployeeService.service, employeeController);
-const PORT = process.env.GRPC_PORT || 50051;
+const PORT = config.grpc_port || 50051;
 
 connectDB().then(() => {
   server.bindAsync(
